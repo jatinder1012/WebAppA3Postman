@@ -1,0 +1,1351 @@
+{
+	"info": {
+		"_postman_id": "82e1eef7-c2f0-4096-834b-40b6171e9a1c",
+		"name": "WebAppA3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36796844"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Update Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/products/99999',\r",
+									"  method: 'PUT',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"id\": 99999,\r",
+									"      \"description\": \"Non-existing Product\",\r",
+									"      \"image\": \"image_url\",\r",
+									"      \"pricing\": 100,\r",
+									"      \"shippingCost\": 10\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing product\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"description\": \"Updated Product\",\r\n  \"image\": \"updated_image_url\",\r\n  \"pricing\": 150,\r\n  \"shippingCost\": 15\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case\r",
+									"pm.sendRequest('http://localhost:5000/api/products/99999', function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing product\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest('http://localhost:5000/api/products/99999', { method: 'DELETE' }, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing product\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case: Missing required field\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/products',\r",
+									"  method: 'POST',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"description\": \"Incomplete Product\"\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 400 for bad request\", function () {\r",
+									"    pm.expect(res).to.have.status(400);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"Sample Product\",\r\n  \"image\": \"image_url\",\r\n  \"pricing\": 100,\r\n  \"shippingCost\": 10\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case\r",
+									"pm.sendRequest('http://localhost:5000/api/users/99999', function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing user\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case: Missing required field\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/users',\r",
+									"  method: 'POST',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"email\": \"incomplete@example.com\",\r",
+									"      \"username\": \"incompleteuser\"\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 400 for bad request\", function () {\r",
+									"    pm.expect(res).to.have.status(400);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"user@example.com\",\r\n  \"password\": \"password123\",\r\n  \"username\": \"newuser\",\r\n  \"purchaseHistory\": [],\r\n  \"shippingAddress\": \"1234 Elm Street\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/users/99999',\r",
+									"  method: 'PUT',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"id\": 99999,\r",
+									"      \"email\": \"nonexistent@example.com\",\r",
+									"      \"password\": \"password\",\r",
+									"      \"username\": \"nonexistentuser\",\r",
+									"      \"purchaseHistory\": [],\r",
+									"      \"shippingAddress\": \"Address\"\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing user\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"email\": \"updateduser@example.com\",\r\n  \"password\": \"newpassword123\",\r\n  \"username\": \"updateduser\",\r\n  \"purchaseHistory\": [],\r\n  \"shippingAddress\": \"5678 Oak Avenue\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest('http://localhost:5000/api/users/99999', { method: 'DELETE' }, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing user\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Get All Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comment By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case\r",
+									"pm.sendRequest('http://localhost:5000/api/comments/99999', function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing comment\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case: Missing required field\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/comments',\r",
+									"  method: 'POST',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"productId\": 1,\r",
+									"      \"userId\": 1,\r",
+									"      \"rating\": 5\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 400 for bad request\", function () {\r",
+									"    pm.expect(res).to.have.status(400);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": 1,\r\n  \"userId\": 1,\r\n  \"rating\": 5,\r\n  \"image\": \"image_url\",\r\n  \"text\": \"Great product!\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/comments/99999',\r",
+									"  method: 'PUT',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"id\": 99999,\r",
+									"      \"productId\": 1,\r",
+									"      \"userId\": 1,\r",
+									"      \"rating\": 4,\r",
+									"      \"image\": \"updated_image_url\",\r",
+									"      \"text\": \"Text for non-existing comment.\"\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing comment\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"productId\": 1,\r\n  \"userId\": 1,\r\n  \"rating\": 4,\r\n  \"image\": \"updated_image_url\",\r\n  \"text\": \"Updated review text.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest('http://localhost:5000/api/comments/99999', { method: 'DELETE' }, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing comment\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carts",
+			"item": [
+				{
+					"name": "Get All Carts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Cart By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case\r",
+									"pm.sendRequest('http://localhost:5000/api/carts/99999', function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing cart\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/carts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case: Missing required field\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/carts',\r",
+									"  method: 'POST',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"userId\": 1\r",
+									"      // Missing \"products\" field\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 400 for bad request\", function () {\r",
+									"    pm.expect(res).to.have.status(400);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 1,\r\n  \"products\": [\r\n    {\r\n      \"productId\": 1,\r\n      \"quantity\": 2\r\n    },\r\n    {\r\n      \"productId\": 2,\r\n      \"quantity\": 1\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/carts/99999',\r",
+									"  method: 'PUT',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"userId\": 1,\r",
+									"      \"products\": [\r",
+									"        {\r",
+									"          \"productId\": 1,\r",
+									"          \"quantity\": 3\r",
+									"        }\r",
+									"      ]\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing cart\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 1,\r\n  \"products\": [\r\n    {\r\n      \"productId\": 1,\r\n      \"quantity\": 3\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/carts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest('http://localhost:5000/api/carts/99999', { method: 'DELETE' }, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing cart\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/carts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case\r",
+									"pm.sendRequest('http://localhost:5000/api/orders/99999', function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing order\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/orders/1\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"orders",
+								"1\n"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"  pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+									"});\r",
+									"\r",
+									"// Failure case: Missing required field\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/orders',\r",
+									"  method: 'POST',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"userId\": 1,\r",
+									"      \"totalAmount\": 250\r",
+									"      // Missing \"productIds\" and \"shippingAddress\" fields\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 400 for bad request\", function () {\r",
+									"    pm.expect(res).to.have.status(400);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": 1,\r\n  \"productIds\": [1, 2],\r\n  \"totalAmount\": 250,\r\n  \"shippingAddress\": \"1234 Elm Street\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest({\r",
+									"  url: 'http://localhost:5000/api/orders/99999',\r",
+									"  method: 'PUT',\r",
+									"  header: 'Content-Type: application/json',\r",
+									"  body: {\r",
+									"    mode: 'raw',\r",
+									"    raw: JSON.stringify({\r",
+									"      \"userId\": 1,\r",
+									"      \"productIds\": [1, 3],\r",
+									"      \"totalAmount\": 300,\r",
+									"      \"shippingAddress\": \"5678 Oak Avenue\"\r",
+									"    })\r",
+									"  }\r",
+									"}, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing order\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": \"{{orderId}}\",\r\n  \"userId\": 1,\r\n  \"products\": [\r\n    { \"productId\": 1, \"quantity\": 3 },\r\n    { \"productId\": 2, \"quantity\": 2 }\r\n  ],\r\n  \"totalPrice\": 69.99,\r\n  \"orderDate\": \"2024-07-27T00:00:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/orders/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"  pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Failure case: Invalid ID\r",
+									"pm.sendRequest('http://localhost:5000/api/orders/99999', { method: 'DELETE' }, function (err, res) {\r",
+									"  pm.test(\"Status code is 404 for non-existing order\", function () {\r",
+									"    pm.expect(res).to.have.status(404);\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/orders/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
